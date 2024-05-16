@@ -7,8 +7,9 @@
            fx:controller="com.paidservices.paidservicesdesktopapp.PaidServiceController">
 
     <TabPane fx:id="modulePane">
-        <Tab text="MedClinic" style="-fx-font-size: 18">
-
+        <Tab text="Модули MedClinic" style="-fx-font-size: 18; -fx-padding: 10"/>
+        <Tab text="Модуль посещений" style="-fx-font-size: 18; -fx-padding: 10">
+            <fx:include source="visitation/visitation-view.fxml"/>
         </Tab>
     </TabPane>
 </StackPane>
