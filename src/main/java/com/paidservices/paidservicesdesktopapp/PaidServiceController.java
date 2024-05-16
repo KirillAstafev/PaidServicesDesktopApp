@@ -1,5 +1,7 @@
 package com.paidservices.paidservicesdesktopapp;
 
-public class PaidServiceController {
+import javafx.scene.control.TabPane;
 
+public class PaidServiceController {
+    public TabPane modulePane;
 }

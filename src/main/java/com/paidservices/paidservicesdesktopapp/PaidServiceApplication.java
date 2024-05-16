@@ -12,7 +12,7 @@ public class PaidServiceApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PaidServiceApplication.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1000);
-        stage.setTitle("MedClinic");
+        stage.setTitle("АИС MedClinic");
         stage.setScene(scene);
         stage.show();
     }
