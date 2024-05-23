@@ -1,5 +1,7 @@
 package com.paidservices.paidservicesdesktopapp.webclient.api;
 
+import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
+import com.paidservices.paidservicesdesktopapp.visitation.model.Staff;
 import com.paidservices.paidservicesdesktopapp.visitation.model.Visitation;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -18,4 +20,10 @@ public interface Api {
 
     @DELETE("visitations/{id}")
     Call<Void> deleteVisitation(@Path("id") Integer id);
+
+    @GET("staffs")
+    Call<List<Staff>> getStaffList();
+
+    @GET("services")
+    Call<List<MedicalService>> getMedicalServiceList();
 }

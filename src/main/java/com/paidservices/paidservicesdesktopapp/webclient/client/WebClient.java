@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
+import com.paidservices.paidservicesdesktopapp.visitation.model.Staff;
 import com.paidservices.paidservicesdesktopapp.visitation.model.Visitation;
 import com.paidservices.paidservicesdesktopapp.webclient.api.Api;
 import retrofit2.Retrofit;
@@ -66,6 +68,24 @@ public class WebClient {
         CompletableFuture<Void> result = new CompletableFuture<>();
 
         apiService.deleteVisitation(id)
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
+
+    public CompletableFuture<List<Staff>> getStaffList() {
+        CompletableFuture<List<Staff>> result = new CompletableFuture<>();
+
+        apiService.getStaffList()
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
+
+    public CompletableFuture<List<MedicalService>> getMedicalServiceList() {
+        CompletableFuture<List<MedicalService>> result = new CompletableFuture<>();
+
+        apiService.getMedicalServiceList()
                 .enqueue(new MainServiceCallback<>(result));
 
         return result;
