@@ -1,5 +1,6 @@
 package com.paidservices.paidservicesdesktopapp.visitation.controller;
 
+import com.paidservices.paidservicesdesktopapp.PaidServiceApplication;
 import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
 import com.paidservices.paidservicesdesktopapp.visitation.model.Person;
 import com.paidservices.paidservicesdesktopapp.visitation.model.Staff;
@@ -7,19 +8,23 @@ import com.paidservices.paidservicesdesktopapp.visitation.model.Visitation;
 import com.paidservices.paidservicesdesktopapp.webclient.client.WebClient;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.util.Callback;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.function.Consumer;
 
 public class VisitationController {
     private final WebClient client = WebClient.getInstance();
@@ -86,8 +91,21 @@ public class VisitationController {
         });
     }
 
-    public void addVisitationAction(ActionEvent actionEvent) {
+    public void addVisitationAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(PaidServiceApplication.class.getResource("visitation/add-visitation-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
 
+        AddVisitationController controller = fxmlLoader.getController();
+        controller.setControllerCallback(visitation -> {
+            Platform.runLater(() -> {
+                visitationTable.getItems().add(visitation);
+            });
+        });
+
+        Stage stage = new Stage();
+        stage.setTitle("Сохранение данных о посещении");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void editVisitationAction(ActionEvent actionEvent) {
@@ -95,6 +113,37 @@ public class VisitationController {
     }
 
     public void deleteVisitationAction(ActionEvent actionEvent) {
+        if (visitationTable.getSelectionModel().getSelectedItem() == null) {
+            Notifications
+                    .create()
+                    .text("Выберите данные для удаления.")
+                    .showWarning();
 
+            return;
+        }
+
+        Visitation visitation = visitationTable.getSelectionModel().getSelectedItem();
+
+        client.deleteVisitation(visitation.getId())
+                .thenRun(() -> {
+                    Platform.runLater(() -> {
+                        visitationTable.getItems().removeIf(value -> value.getId().equals(visitation.getId()));
+                        Notifications
+                                .create()
+                                .text("Данные успешно удалены.")
+                                .showConfirm();
+                    });
+                })
+                .exceptionally(throwable -> {
+                    Platform.runLater(() -> {
+                        Notifications
+                                .create()
+                                .title("Ошибка!")
+                                .text("Не удалось удалить данные!")
+                                .showError();
+                    });
+
+                    throw new RuntimeException(throwable);
+                });
     }
 }
