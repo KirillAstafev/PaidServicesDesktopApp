@@ -43,4 +43,31 @@ public class WebClient {
 
         return result;
     }
+
+    public CompletableFuture<Integer> saveVisitation(Visitation visitation) {
+        CompletableFuture<Integer> result = new CompletableFuture<>();
+
+        apiService.saveVisitation(visitation)
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
+
+    public CompletableFuture<Void> updateVisitation(Visitation visitation) {
+        CompletableFuture<Void> result = new CompletableFuture<>();
+
+        apiService.updateVisitation(visitation.getId(), visitation)
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
+
+    public CompletableFuture<Void> deleteVisitation(Integer id) {
+        CompletableFuture<Void> result = new CompletableFuture<>();
+
+        apiService.deleteVisitation(id)
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
 }
