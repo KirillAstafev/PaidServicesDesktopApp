@@ -12,17 +12,17 @@
         <HBox spacing="5">
             <Button
                     fx:id="addVisitationButton"
-                    style="-fx-font-size: 14"
+                    style="-fx-font-size: 18"
                     text="Добавить посещение"
                     onAction="#addVisitationAction"/>
             <Button
                     fx:id="editVisitationButton"
-                    style="-fx-font-size: 14"
+                    style="-fx-font-size: 18"
                     text="Редактировать посещение"
                     onAction="#editVisitationAction"/>
             <Button
                     fx:id="deleteVisitationButton"
-                    style="-fx-font-size: 14"
+                    style="-fx-font-size: 18"
                     text="Удалить посещение"
                     onAction="#deleteVisitationAction"/>
         </HBox>
@@ -31,10 +31,14 @@
                 <Label/>
             </placeholder>
             <columns>
-                <TableColumn text="Пациент" prefWidth="480"/>
-                <TableColumn text="Лечащий врач" prefWidth="480"/>
-                <TableColumn text="Мед.услуга" prefWidth="480"/>
-                <TableColumn text="Дата/время" prefWidth="480"/>
+                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                             fx:id="patientColumn" text="Пациент" prefWidth="480"/>
+                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                             fx:id="staffColumn" text="Лечащий врач" prefWidth="480"/>
+                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                             fx:id="serviceColumn" text="Мед.услуга" prefWidth="480"/>
+                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                             fx:id="dateTimeColumn" text="Дата/время" prefWidth="480"/>
             </columns>
         </TableView>
     </VBox>
