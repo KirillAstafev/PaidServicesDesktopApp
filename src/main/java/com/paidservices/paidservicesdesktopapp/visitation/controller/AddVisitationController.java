@@ -6,10 +6,9 @@ import com.paidservices.paidservicesdesktopapp.visitation.model.Visitation;
 import com.paidservices.paidservicesdesktopapp.webclient.client.WebClient;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import org.controlsfx.control.Notifications;
 
@@ -26,6 +25,9 @@ public class AddVisitationController {
     public TextField patientPhoneNumberTextField;
     public ComboBox<Staff> staffComboBox;
     public ComboBox<MedicalService> medicalServiceComboBox;
+    public DatePicker datePicker;
+    public TextField timeTextField;
+    public Button saveVisitationButton;
 
     public void setControllerCallback(Consumer<Visitation> controllerCallback) {
         this.controllerCallback = controllerCallback;
@@ -68,6 +70,27 @@ public class AddVisitationController {
                                 .create()
                                 .title("Ошибка!")
                                 .text("Не удалось загрузить данные о мед.услугах!")
+                                .showError();
+                    });
+
+                    throw new RuntimeException(throwable);
+                });
+    }
+
+    public void saveVisitationAction(ActionEvent actionEvent) {
+        Visitation visitation = new Visitation();
+
+        client.saveVisitation(visitation)
+                .thenAccept(id -> {
+                    visitation.setId(id);
+                    controllerCallback.accept(visitation);
+                })
+                .exceptionally(throwable -> {
+                    Platform.runLater(() -> {
+                        Notifications
+                                .create()
+                                .title("Ошибка!")
+                                .text("Не удалось сохранить данные о посещении!")
                                 .showError();
                     });
 

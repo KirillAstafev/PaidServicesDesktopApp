@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.paidservices.paidservicesdesktopapp.visitation.controller.AddVisitationController"
@@ -23,7 +24,15 @@
                   prefWidth="350"/>
         <ComboBox fx:id="medicalServiceComboBox" style="-fx-font-size: 18"
                   prefWidth="350"/>
-        <DatePicker promptText="Дата/время посещения"/>
-        <Button text="Сохранить" style="-fx-font-size: 18"/>
+
+        <HBox spacing="5" style="-fx-alignment: top-center">
+            <DatePicker fx:id="datePicker" promptText="Дата посещения"
+                        style="-fx-font-size: 16"/>
+            <TextField fx:id="timeTextField" promptText="Время посещения"
+                       style="-fx-font-size: 16"/>
+        </HBox>
+
+        <Button fx:id="saveVisitationButton" text="Сохранить"
+                style="-fx-font-size: 18" onAction="#saveVisitationAction"/>
     </VBox>
 </StackPane>
