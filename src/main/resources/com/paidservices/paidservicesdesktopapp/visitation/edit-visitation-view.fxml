@@ -7,27 +7,29 @@
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.paidservices.paidservicesdesktopapp.visitation.controller.EditVisitationController"
-           prefHeight="600.0" prefWidth="400.0"
+           prefHeight="650.0" prefWidth="400.0"
            style="-fx-padding: 5">
 
-    <VBox spacing="10" style="-fx-padding: 5">
+    <VBox spacing="10" style="-fx-padding: 10">
         <Label text="Общая информация о пациенте" style="-fx-font-size: 18"/>
         <VBox spacing="30" style="-fx-padding: 5; -fx-alignment: top-center">
-            <TextField style="-fx-font-size: 18" disable="true"
+            <TextField fx:id="patientLastNameTextField" style="-fx-font-size: 18" disable="true"
                        prefWidth="320" promptText="Фамилия пациента"/>
-            <TextField style="-fx-font-size: 18" disable="true"
+            <TextField fx:id="patientFirstNameTextField" style="-fx-font-size: 18" disable="true"
                        prefWidth="320" promptText="Имя пациента"/>
-            <TextField style="-fx-font-size: 18" disable="true"
+            <TextField fx:id="patientMiddleNameTextField" style="-fx-font-size: 18" disable="true"
                        prefWidth="320" promptText="Отчество пациента (при наличии)"/>
-            <TextField style="-fx-font-size: 18" disable="true"
+            <TextField fx:id="patientSnilsTextField" style="-fx-font-size: 18" disable="true"
                        prefWidth="320" promptText="СНИЛС пациента"/>
-            <TextField style="-fx-font-size: 18" disable="true"
+            <TextField fx:id="patientPhoneNumberTextField" style="-fx-font-size: 18" disable="true"
                        prefWidth="320" promptText="Номер телефона пациента"/>
-            <ComboBox fx:id="staffComboBox" style="-fx-font-size: 18"
-                      prefWidth="350"/>
+        </VBox>
+
+        <Label text="Информация о посещении" style="-fx-font-size: 18"/>
+
+        <VBox spacing="30" style="-fx-padding: 5; -fx-alignment: top-center">
             <ComboBox fx:id="medicalServiceComboBox" style="-fx-font-size: 18"
                       prefWidth="350"/>
-
             <HBox spacing="5" style="-fx-alignment: center">
                 <DatePicker fx:id="datePicker" promptText="Дата посещения"
                             style="-fx-font-size: 16"/>
