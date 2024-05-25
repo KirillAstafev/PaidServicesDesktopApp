@@ -4,6 +4,10 @@ import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
 import com.paidservices.paidservicesdesktopapp.visitation.model.Person;
 import com.paidservices.paidservicesdesktopapp.visitation.model.Staff;
 import com.paidservices.paidservicesdesktopapp.visitation.model.Visitation;
+import com.paidservices.paidservicesdesktopapp.visitation.view.cellfactory.MedicalServiceComboBoxCellFactory;
+import com.paidservices.paidservicesdesktopapp.visitation.view.cellfactory.StaffComboBoxCellFactory;
+import com.paidservices.paidservicesdesktopapp.visitation.view.converter.MedicalServiceConverter;
+import com.paidservices.paidservicesdesktopapp.visitation.view.converter.StaffConverter;
 import com.paidservices.paidservicesdesktopapp.webclient.client.WebClient;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -164,72 +168,12 @@ public class AddVisitationController {
     }
 
     private void initializeStaffComboBox() {
-        staffComboBox.setCellFactory(comboBox -> new ListCell<>() {
-            @Override
-            protected void updateItem(Staff staff, boolean empty) {
-                super.updateItem(staff, empty);
-
-                if (staff == null || empty) {
-                    setText(null);
-                } else {
-                    setText(String.format("%s %s.%s (%s)",
-                            staff.getPerson().getLastName(),
-                            staff.getPerson().getFirstName().charAt(0),
-                            staff.getPerson().getMiddleName() != null ? staff.getPerson().getMiddleName().charAt(0) : null,
-                            staff.getSpecialities().get(0).getName()));
-                }
-            }
-        });
-
-        staffComboBox.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(Staff staff) {
-                if (staff == null) return "";
-
-                return String.format("%s %s.%s (%s)",
-                        staff.getPerson().getLastName(),
-                        staff.getPerson().getFirstName().charAt(0),
-                        staff.getPerson().getMiddleName() != null ? staff.getPerson().getMiddleName().charAt(0) : null,
-                        staff.getSpecialities().get(0).getName());
-            }
-
-            @Override
-            public Staff fromString(String string) {
-                return null;
-            }
-        });
+        staffComboBox.setCellFactory(new StaffComboBoxCellFactory());
+        staffComboBox.setConverter(new StaffConverter());
     }
 
     private void initializeMedicalServiceComboBox() {
-        medicalServiceComboBox.setCellFactory(comboBox -> new ListCell<>() {
-            @Override
-            protected void updateItem(MedicalService service, boolean empty) {
-                super.updateItem(service, empty);
-
-                if (service == null || empty) {
-                    setText(null);
-                } else {
-                    setText(String.format("%s (%s р.)",
-                            service.getName(),
-                            service.getPrice().toPlainString()));
-                }
-            }
-        });
-
-        medicalServiceComboBox.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(MedicalService service) {
-                if (service == null) return "";
-
-                return String.format("%s (%s р.)",
-                        service.getName(),
-                        service.getPrice().toPlainString());
-            }
-
-            @Override
-            public MedicalService fromString(String string) {
-                return null;
-            }
-        });
+        medicalServiceComboBox.setCellFactory(new MedicalServiceComboBoxCellFactory());
+        medicalServiceComboBox.setConverter(new MedicalServiceConverter());
     }
 }
