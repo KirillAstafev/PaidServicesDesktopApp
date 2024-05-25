@@ -10,13 +10,12 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 
@@ -24,7 +23,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.function.Consumer;
 
 public class VisitationController {
     private final WebClient client = WebClient.getInstance();
@@ -94,15 +92,16 @@ public class VisitationController {
     public void addVisitationAction(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PaidServiceApplication.class.getResource("visitation/add-visitation-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
 
         AddVisitationController controller = fxmlLoader.getController();
         controller.setControllerCallback(visitation -> {
             Platform.runLater(() -> {
                 visitationTable.getItems().add(visitation);
+                stage.close();
             });
         });
 
-        Stage stage = new Stage();
         stage.setTitle("Сохранение данных о посещении");
         stage.setScene(scene);
         stage.show();

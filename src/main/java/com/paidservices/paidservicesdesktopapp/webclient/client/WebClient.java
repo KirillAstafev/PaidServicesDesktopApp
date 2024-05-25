@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
+import com.paidservices.paidservicesdesktopapp.visitation.model.Person;
 import com.paidservices.paidservicesdesktopapp.visitation.model.Staff;
 import com.paidservices.paidservicesdesktopapp.visitation.model.Visitation;
 import com.paidservices.paidservicesdesktopapp.webclient.api.Api;
@@ -86,6 +87,24 @@ public class WebClient {
         CompletableFuture<List<MedicalService>> result = new CompletableFuture<>();
 
         apiService.getMedicalServiceList()
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
+
+    public CompletableFuture<Person> getPersonBySnils(String snils) {
+        CompletableFuture<Person> result = new CompletableFuture<>();
+
+        apiService.getPersonBySnils(snils)
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
+
+    public CompletableFuture<Integer> savePerson(Person person) {
+        CompletableFuture<Integer> result = new CompletableFuture<>();
+
+        apiService.savePerson(person)
                 .enqueue(new MainServiceCallback<>(result));
 
         return result;

@@ -1,6 +1,7 @@
 package com.paidservices.paidservicesdesktopapp.visitation.controller;
 
 import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
+import com.paidservices.paidservicesdesktopapp.visitation.model.Person;
 import com.paidservices.paidservicesdesktopapp.visitation.model.Staff;
 import com.paidservices.paidservicesdesktopapp.visitation.model.Visitation;
 import com.paidservices.paidservicesdesktopapp.webclient.client.WebClient;
@@ -12,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import org.controlsfx.control.Notifications;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.function.Consumer;
 
 public class AddVisitationController {
@@ -78,14 +81,54 @@ public class AddVisitationController {
     }
 
     public void saveVisitationAction(ActionEvent actionEvent) {
-        Visitation visitation = new Visitation();
+        Visitation visitation = buildVisitation();
+
+        client.getPersonBySnils(patientSnilsTextField.getText())
+                .thenAccept(person -> {
+                    saveVisitationWithPatient(visitation, person);
+                })
+                .exceptionally(throwable -> {
+                    Platform.runLater(() -> {
+                        Person patient = buildPatient();
+
+                        client.savePerson(patient)
+                                .thenAccept(patientId -> {
+                                    patient.setId(patientId);
+                                    saveVisitationWithPatient(visitation, patient);
+                                })
+                                .exceptionally(e -> {
+                                    Platform.runLater(() -> {
+                                        Notifications
+                                                .create()
+                                                .title("Ошибка!")
+                                                .text("Не удалось сохранить данные о посещении!")
+                                                .showError();
+                                    });
+
+                                    throw new RuntimeException(e);
+                                });
+                    });
+
+                    throw new RuntimeException(throwable);
+                });
+    }
+
+    private void saveVisitationWithPatient(Visitation visitation, Person patient) {
+        visitation.setPatient(patient);
 
         client.saveVisitation(visitation)
                 .thenAccept(id -> {
                     visitation.setId(id);
                     controllerCallback.accept(visitation);
+
+                    Platform.runLater(() -> {
+                        Notifications
+                                .create()
+                                .text("Данные успешно сохранены.")
+                                .showConfirm();
+                    });
                 })
-                .exceptionally(throwable -> {
+                .exceptionally(exception -> {
                     Platform.runLater(() -> {
                         Notifications
                                 .create()
@@ -94,8 +137,30 @@ public class AddVisitationController {
                                 .showError();
                     });
 
-                    throw new RuntimeException(throwable);
+                    throw new RuntimeException(exception);
                 });
+    }
+
+    private Visitation buildVisitation() {
+        Visitation visitation = new Visitation();
+
+        visitation.setStaff(staffComboBox.getSelectionModel().getSelectedItem());
+        visitation.setMedicalService(medicalServiceComboBox.getSelectionModel().getSelectedItem());
+        visitation.setDateTime(LocalDateTime.of(datePicker.getValue(), LocalTime.parse(timeTextField.getText())));
+
+        return visitation;
+    }
+
+    private Person buildPatient() {
+        Person patient = new Person();
+
+        patient.setFirstName(patientFirstNameTextField.getText());
+        patient.setMiddleName(patientMiddleNameTextField.getText());
+        patient.setLastName(patientLastNameTextField.getText());
+        patient.setSnils(patientSnilsTextField.getText());
+        patient.setPhoneNumber(patientPhoneNumberTextField.getText());
+
+        return patient;
     }
 
     private void initializeStaffComboBox() {
