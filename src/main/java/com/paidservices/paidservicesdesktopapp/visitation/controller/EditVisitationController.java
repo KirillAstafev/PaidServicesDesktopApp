@@ -83,6 +83,13 @@ public class EditVisitationController {
         client.updateVisitation(editedVisitation)
                 .thenAccept(v -> {
                     controllerCallback.accept(editedVisitation);
+
+                    Platform.runLater(() -> {
+                        Notifications
+                                .create()
+                                .text("Данные успешно сохранены.")
+                                .showConfirm();
+                    });
                 })
                 .exceptionally(throwable -> {
                     Platform.runLater(() -> {
