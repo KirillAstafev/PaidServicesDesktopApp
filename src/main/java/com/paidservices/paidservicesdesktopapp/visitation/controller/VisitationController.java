@@ -107,8 +107,34 @@ public class VisitationController {
         stage.show();
     }
 
-    public void editVisitationAction(ActionEvent actionEvent) {
+    public void editVisitationAction(ActionEvent actionEvent) throws IOException {
+        if (visitationTable.getSelectionModel().getSelectedItem() == null) {
+            Notifications
+                    .create()
+                    .text("Выберите данные для редактирования.")
+                    .showWarning();
 
+            return;
+        }
+
+        FXMLLoader fxmlLoader = new FXMLLoader(PaidServiceApplication.class.getResource("visitation/edit-visitation-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+
+        EditVisitationController controller = fxmlLoader.getController();
+        controller.setVisitation(visitationTable.getSelectionModel().getSelectedItem());
+
+        controller.setControllerCallback(visitation -> {
+            Platform.runLater(() -> {
+                visitationTable.getItems().removeIf(v -> v.getId().equals(visitation.getId()));
+                visitationTable.getItems().add(visitation);
+                stage.close();
+            });
+        });
+
+        stage.setTitle("Редактирование данных о посещении");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void deleteVisitationAction(ActionEvent actionEvent) {
