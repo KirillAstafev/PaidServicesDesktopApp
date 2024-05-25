@@ -1,10 +1,10 @@
 package com.paidservices.paidservicesdesktopapp.visitation.controller;
 
 import com.paidservices.paidservicesdesktopapp.PaidServiceApplication;
-import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
-import com.paidservices.paidservicesdesktopapp.visitation.model.Person;
-import com.paidservices.paidservicesdesktopapp.visitation.model.Staff;
-import com.paidservices.paidservicesdesktopapp.visitation.model.Visitation;
+import com.paidservices.paidservicesdesktopapp.model.MedicalService;
+import com.paidservices.paidservicesdesktopapp.model.Person;
+import com.paidservices.paidservicesdesktopapp.model.Staff;
+import com.paidservices.paidservicesdesktopapp.model.Visitation;
 import com.paidservices.paidservicesdesktopapp.webclient.client.WebClient;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;

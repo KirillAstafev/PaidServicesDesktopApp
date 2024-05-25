@@ -1,9 +1,9 @@
 package com.paidservices.paidservicesdesktopapp.visitation.controller;
 
-import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
-import com.paidservices.paidservicesdesktopapp.visitation.model.Person;
-import com.paidservices.paidservicesdesktopapp.visitation.model.Staff;
-import com.paidservices.paidservicesdesktopapp.visitation.model.Visitation;
+import com.paidservices.paidservicesdesktopapp.model.MedicalService;
+import com.paidservices.paidservicesdesktopapp.model.Person;
+import com.paidservices.paidservicesdesktopapp.model.Staff;
+import com.paidservices.paidservicesdesktopapp.model.Visitation;
 import com.paidservices.paidservicesdesktopapp.visitation.view.cellfactory.MedicalServiceComboBoxCellFactory;
 import com.paidservices.paidservicesdesktopapp.visitation.view.cellfactory.StaffComboBoxCellFactory;
 import com.paidservices.paidservicesdesktopapp.visitation.view.converter.MedicalServiceConverter;
@@ -14,7 +14,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.util.StringConverter;
 import org.controlsfx.control.Notifications;
 
 import java.time.LocalDateTime;

@@ -1,9 +1,9 @@
 package com.paidservices.paidservicesdesktopapp.webclient.api;
 
-import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
-import com.paidservices.paidservicesdesktopapp.visitation.model.Person;
-import com.paidservices.paidservicesdesktopapp.visitation.model.Staff;
-import com.paidservices.paidservicesdesktopapp.visitation.model.Visitation;
+import com.paidservices.paidservicesdesktopapp.model.MedicalService;
+import com.paidservices.paidservicesdesktopapp.model.Person;
+import com.paidservices.paidservicesdesktopapp.model.Staff;
+import com.paidservices.paidservicesdesktopapp.model.Visitation;
 import retrofit2.Call;
 import retrofit2.http.*;
 

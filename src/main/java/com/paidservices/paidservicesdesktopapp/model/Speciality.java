@@ -1,11 +1,8 @@
-package com.paidservices.paidservicesdesktopapp.visitation.model;
+package com.paidservices.paidservicesdesktopapp.model;
 
-import java.math.BigDecimal;
-
-public class MedicalService {
+public class Speciality {
     private Integer id;
     private String name;
-    private BigDecimal price;
 
     public Integer getId() {
         return id;
@@ -21,13 +18,5 @@ public class MedicalService {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 }

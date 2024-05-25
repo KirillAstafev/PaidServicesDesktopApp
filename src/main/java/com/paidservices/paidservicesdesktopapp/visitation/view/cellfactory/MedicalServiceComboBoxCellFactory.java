@@ -1,6 +1,6 @@
 package com.paidservices.paidservicesdesktopapp.visitation.view.cellfactory;
 
-import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
+import com.paidservices.paidservicesdesktopapp.model.MedicalService;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;

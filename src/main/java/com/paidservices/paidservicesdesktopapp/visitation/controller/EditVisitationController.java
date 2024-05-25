@@ -1,7 +1,7 @@
 package com.paidservices.paidservicesdesktopapp.visitation.controller;
 
-import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
-import com.paidservices.paidservicesdesktopapp.visitation.model.Visitation;
+import com.paidservices.paidservicesdesktopapp.model.MedicalService;
+import com.paidservices.paidservicesdesktopapp.model.Visitation;
 import com.paidservices.paidservicesdesktopapp.visitation.view.cellfactory.MedicalServiceComboBoxCellFactory;
 import com.paidservices.paidservicesdesktopapp.visitation.view.converter.MedicalServiceConverter;
 import com.paidservices.paidservicesdesktopapp.webclient.client.WebClient;

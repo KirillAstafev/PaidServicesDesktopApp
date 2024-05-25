@@ -1,4 +1,4 @@
-package com.paidservices.paidservicesdesktopapp.visitation.model;
+package com.paidservices.paidservicesdesktopapp.model;
 
 import java.time.LocalDateTime;
 

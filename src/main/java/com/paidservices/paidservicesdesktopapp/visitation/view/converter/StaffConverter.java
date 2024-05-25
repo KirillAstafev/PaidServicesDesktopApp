@@ -1,6 +1,6 @@
 package com.paidservices.paidservicesdesktopapp.visitation.view.converter;
 
-import com.paidservices.paidservicesdesktopapp.visitation.model.Staff;
+import com.paidservices.paidservicesdesktopapp.model.Staff;
 import javafx.util.StringConverter;
 
 public class StaffConverter extends StringConverter<Staff> {

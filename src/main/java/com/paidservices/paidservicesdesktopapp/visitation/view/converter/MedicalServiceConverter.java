@@ -1,6 +1,6 @@
 package com.paidservices.paidservicesdesktopapp.visitation.view.converter;
 
-import com.paidservices.paidservicesdesktopapp.visitation.model.MedicalService;
+import com.paidservices.paidservicesdesktopapp.model.MedicalService;
 import javafx.util.StringConverter;
 
 public class MedicalServiceConverter extends StringConverter<MedicalService> {
