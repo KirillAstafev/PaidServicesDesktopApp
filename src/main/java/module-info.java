@@ -13,6 +13,7 @@ module com.paidservices.paidservicesdesktopapp {
 
     opens com.paidservices.paidservicesdesktopapp to javafx.fxml;
     opens com.paidservices.paidservicesdesktopapp.visitation.controller to javafx.fxml;
+    opens com.paidservices.paidservicesdesktopapp.financial.controller to javafx.fxml;
     opens com.paidservices.paidservicesdesktopapp.model to com.fasterxml.jackson.databind,
             com.fasterxml.jackson.datatype.jsr310;
     exports com.paidservices.paidservicesdesktopapp;

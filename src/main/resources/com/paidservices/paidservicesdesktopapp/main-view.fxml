@@ -11,5 +11,8 @@
         <Tab text="Модуль посещений" style="-fx-font-size: 18; -fx-padding: 10">
             <fx:include source="visitation/visitation-view.fxml"/>
         </Tab>
+        <Tab text="Модуль фин.отчётности" style="-fx-font-size: 18; -fx-padding: 10">
+            <fx:include source="financial/financial-view.fxml"/>
+        </Tab>
     </TabPane>
 </StackPane>
