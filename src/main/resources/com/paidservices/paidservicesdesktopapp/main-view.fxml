@@ -3,16 +3,35 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.paidservices.paidservicesdesktopapp.PaidServiceController">
 
     <TabPane fx:id="modulePane">
-        <Tab text="Модули MedClinic" style="-fx-font-size: 18; -fx-padding: 10"/>
-        <Tab text="Модуль посещений" style="-fx-font-size: 18; -fx-padding: 10">
-            <fx:include source="visitation/visitation-view.fxml"/>
-        </Tab>
-        <Tab text="Модуль фин.отчётности" style="-fx-font-size: 18; -fx-padding: 10">
-            <fx:include source="financial/financial-view.fxml"/>
+        <Tab text="Модули MedClinic" style="-fx-font-size: 18; -fx-padding: 10">
+            <GridPane style="-fx-padding: 20" hgap="30" vgap="30">
+                <StackPane prefHeight="120" prefWidth="450"
+                           GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="1" GridPane.rowSpan="1"
+                           style="-fx-border-width: 1; -fx-border-radius: 10; -fx-border-style: solid; -fx-padding: 10"
+                           onMouseClicked="#visitationModuleOnClick">
+                    <VBox spacing="30">
+                        <Label text="Модуль посещений" style="-fx-font-size: 26"/>
+                        <Label text="Модуль для работы с записью на приём" style="-fx-font-size: 14"/>
+                    </VBox>
+                </StackPane>
+
+                <StackPane prefHeight="120" prefWidth="450"
+                           GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="1" GridPane.rowSpan="1"
+                           style="-fx-border-width: 1; -fx-border-radius: 10; -fx-border-style: solid; -fx-padding: 10"
+                           onMouseClicked="#financialModuleOnClick">
+                    <VBox spacing="30">
+                        <Label text="Модуль финансовой отчётности" style="-fx-font-size: 26"/>
+                        <Label text="Модуль для просмотра оказанных услуг и оформления отчётов" style="-fx-font-size: 14"/>
+                    </VBox>
+                </StackPane>
+            </GridPane>
         </Tab>
     </TabPane>
 </StackPane>
