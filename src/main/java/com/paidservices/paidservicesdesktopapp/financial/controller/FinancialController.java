@@ -8,6 +8,7 @@ import com.paidservices.paidservicesdesktopapp.webclient.client.WebClient;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -91,5 +92,9 @@ public class FinancialController {
             else
                 return new SimpleStringProperty("Оплачено");
         });
+    }
+
+    public void saveFinancialReportAction(ActionEvent actionEvent) {
+
     }
 }
