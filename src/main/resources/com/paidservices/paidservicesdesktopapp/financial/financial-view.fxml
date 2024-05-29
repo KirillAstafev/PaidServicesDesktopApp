@@ -3,29 +3,42 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.paidservices.paidservicesdesktopapp.financial.controller.FinancialController"
            style="-fx-padding: 5">
     <VBox spacing="5">
-        <TableView fx:id="financialInfoTable" prefHeight="1000">
-            <placeholder>
-                <Label/>
-            </placeholder>
-            <columns>
-                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
-                             fx:id="patientColumn" text="Пациент" prefWidth="380"/>
-                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
-                             fx:id="staffColumn" text="Лечащий врач" prefWidth="270"/>
-                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
-                             fx:id="serviceColumn" text="Мед.услуга" prefWidth="450"/>
-                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
-                             fx:id="dateColumn" text="Дата оказания услуги" prefWidth="300"/>
-                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
-                             fx:id="servicePriceColumn" text="Сумма" prefWidth="250"/>
-                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
-                             fx:id="serviceStatusColumn" text="Статус" prefWidth="250"/>
-            </columns>
-        </TableView>
+        <HBox>
+            <Button text="Сохранить отчёт"
+                    onAction="#saveFinancialReportAction"
+                    style="-fx-font-size: 18"/>
+
+            <DatePicker fx:id="startDatePicker" promptText="Начальная дата"
+                        style="-fx-font-size: 16"/>
+            <DatePicker fx:id="endDatePicker" promptText="Конечная дата"
+                        style="-fx-font-size: 16"/>
+        </HBox>
+        <VBox spacing="5">
+            <TableView fx:id="financialInfoTable" prefHeight="1000">
+                <placeholder>
+                    <Label/>
+                </placeholder>
+                <columns>
+                    <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                                 fx:id="patientColumn" text="Пациент" prefWidth="380"/>
+                    <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                                 fx:id="staffColumn" text="Лечащий врач" prefWidth="270"/>
+                    <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                                 fx:id="serviceColumn" text="Мед.услуга" prefWidth="450"/>
+                    <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                                 fx:id="dateColumn" text="Дата оказания услуги" prefWidth="300"/>
+                    <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                                 fx:id="servicePriceColumn" text="Сумма" prefWidth="250"/>
+                    <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                                 fx:id="serviceStatusColumn" text="Статус" prefWidth="250"/>
+                </columns>
+            </TableView>
+        </VBox>
     </VBox>
 </StackPane>
