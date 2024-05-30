@@ -1,9 +1,6 @@
 package com.paidservices.paidservicesdesktopapp.webclient.api;
 
-import com.paidservices.paidservicesdesktopapp.model.MedicalService;
-import com.paidservices.paidservicesdesktopapp.model.Person;
-import com.paidservices.paidservicesdesktopapp.model.Staff;
-import com.paidservices.paidservicesdesktopapp.model.Visitation;
+import com.paidservices.paidservicesdesktopapp.model.*;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -33,4 +30,7 @@ public interface Api {
 
     @POST("persons")
     Call<Integer> savePerson(@Body Person person);
+
+    @GET("records")
+    Call<List<MedicalRecord>> getRecordsByPatientId(@Query("patientId") Integer patientId);
 }

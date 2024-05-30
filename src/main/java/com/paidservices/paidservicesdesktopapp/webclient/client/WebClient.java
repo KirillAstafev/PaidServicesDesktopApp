@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.paidservices.paidservicesdesktopapp.model.MedicalService;
-import com.paidservices.paidservicesdesktopapp.model.Person;
-import com.paidservices.paidservicesdesktopapp.model.Staff;
-import com.paidservices.paidservicesdesktopapp.model.Visitation;
+import com.paidservices.paidservicesdesktopapp.model.*;
 import com.paidservices.paidservicesdesktopapp.webclient.api.Api;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -105,6 +102,15 @@ public class WebClient {
         CompletableFuture<Integer> result = new CompletableFuture<>();
 
         apiService.savePerson(person)
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
+
+    public CompletableFuture<List<MedicalRecord>> getRecordsByPatientId(Integer patientId) {
+        CompletableFuture<List<MedicalRecord>> result = new CompletableFuture<>();
+
+        apiService.getRecordsByPatientId(patientId)
                 .enqueue(new MainServiceCallback<>(result));
 
         return result;

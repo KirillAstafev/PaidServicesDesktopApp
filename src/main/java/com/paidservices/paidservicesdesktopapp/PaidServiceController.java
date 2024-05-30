@@ -33,11 +33,26 @@ public class PaidServiceController {
         FXMLLoader fxmlLoader = new FXMLLoader(PaidServiceApplication.class.getResource("financial/financial-view.fxml"));
         Node rootNode = fxmlLoader.load();
 
-        Tab visitationTab = new Tab("Модуль фин.отчётности");
-        visitationTab.setStyle("-fx-font-size: 18; -fx-padding: 10");
-        visitationTab.setContent(rootNode);
+        Tab financialTab = new Tab("Модуль фин.отчётности");
+        financialTab.setStyle("-fx-font-size: 18; -fx-padding: 10");
+        financialTab.setContent(rootNode);
 
-        modulePane.getTabs().add(visitationTab);
-        modulePane.getSelectionModel().select(visitationTab);
+        modulePane.getTabs().add(financialTab);
+        modulePane.getSelectionModel().select(financialTab);
+    }
+
+    public void recordsModuleOnClick(MouseEvent mouseEvent) throws IOException {
+        if (mouseEvent.getClickCount() < 2)
+            return;
+
+        FXMLLoader fxmlLoader = new FXMLLoader(PaidServiceApplication.class.getResource("record/record-view.fxml"));
+        Node rootNode = fxmlLoader.load();
+
+        Tab recordsTab = new Tab("Модуль мед.записей");
+        recordsTab.setStyle("-fx-font-size: 18; -fx-padding: 10");
+        recordsTab.setContent(rootNode);
+
+        modulePane.getTabs().add(recordsTab);
+        modulePane.getSelectionModel().select(recordsTab);
     }
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.paidservices.paidservicesdesktopapp.record.controller.RecordController"
+           style="-fx-padding: 5">
+    <VBox spacing="5">
+        <HBox spacing="5">
+            <TextField fx:id="patientSnilsTextField" style="-fx-font-size: 18"
+                       prefWidth="400" promptText="СНИЛС пациента"/>
+            <Button
+                    fx:id="searchPatientButton"
+                    style="-fx-font-size: 18"
+                    text="Поиск"
+                    onAction="#searchPatientAction"/>
+        </HBox>
+
+        <HBox spacing="5">
+            <Button
+                    fx:id="addRecordButton"
+                    style="-fx-font-size: 18"
+                    text="Добавить мед.запись"
+                    onAction="#addRecordAction"/>
+            <Button
+                    fx:id="editRecordButton"
+                    style="-fx-font-size: 18"
+                    text="Редактировать мед.запись"
+                    onAction="#editRecordAction"/>
+            <Button
+                    fx:id="deleteRecordButton"
+                    style="-fx-font-size: 18"
+                    text="Удалить мед.запись"
+                    onAction="#deleteRecordAction"/>
+        </HBox>
+        <TableView fx:id="recordTable" prefHeight="1000">
+            <placeholder>
+                <Label style="-fx-font-size: 16" text="Введите пациента для начала работы."/>
+            </placeholder>
+            <columns>
+                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                             fx:id="patientColumn" text="Пациент" prefWidth="480"/>
+                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                             fx:id="staffColumn" text="Лечащий врач" prefWidth="480"/>
+                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                             fx:id="diagnosisColumn" text="Диагноз" prefWidth="480"/>
+                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                             fx:id="dateColumn" text="Дата записи" prefWidth="480"/>
+            </columns>
+        </TableView>
+    </VBox>
+</StackPane>
