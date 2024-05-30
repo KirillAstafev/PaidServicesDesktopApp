@@ -10,6 +10,9 @@ module com.paidservices.paidservicesdesktopapp {
     requires retrofit2.converter.jackson;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
+    requires org.apache.pdfbox;
+    requires org.apache.pdfbox.io;
+    requires org.apache.commons.logging;
 
     opens com.paidservices.paidservicesdesktopapp to javafx.fxml;
     opens com.paidservices.paidservicesdesktopapp.visitation.controller to javafx.fxml;

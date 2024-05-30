@@ -1,5 +1,10 @@
 package com.paidservices.paidservicesdesktopapp.financial.controller;
 
+import com.paidservices.paidservicesdesktopapp.financial.analytics.AnalyticsCreator;
+import com.paidservices.paidservicesdesktopapp.financial.analytics.impl.AnalyticsCreatorImpl;
+import com.paidservices.paidservicesdesktopapp.financial.analytics.model.FinancialAnalytics;
+import com.paidservices.paidservicesdesktopapp.financial.report.ReportCreator;
+import com.paidservices.paidservicesdesktopapp.financial.report.impl.PdfReportCreator;
 import com.paidservices.paidservicesdesktopapp.model.MedicalService;
 import com.paidservices.paidservicesdesktopapp.model.Person;
 import com.paidservices.paidservicesdesktopapp.model.Staff;
@@ -10,17 +15,28 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import org.controlsfx.control.Notifications;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static javafx.stage.FileChooser.ExtensionFilter;
 
 public class FinancialController {
     private final WebClient client = WebClient.getInstance();
+    private final ReportCreator reportCreator = new PdfReportCreator();
+    private final AnalyticsCreator analyticsCreator = new AnalyticsCreatorImpl();
 
+    public StackPane rootPane;
     public TableView<Visitation> financialInfoTable;
     public TableColumn<Visitation, String> patientColumn;
     public TableColumn<Visitation, String> staffColumn;
@@ -28,6 +44,8 @@ public class FinancialController {
     public TableColumn<Visitation, String> dateColumn;
     public TableColumn<Visitation, String> servicePriceColumn;
     public TableColumn<Visitation, String> serviceStatusColumn;
+    public DatePicker startDatePicker;
+    public DatePicker endDatePicker;
 
     @FXML
     public void initialize() {
@@ -95,6 +113,41 @@ public class FinancialController {
     }
 
     public void saveFinancialReportAction(ActionEvent actionEvent) {
+        List<Visitation> reportData = applyDateFilters(financialInfoTable.getItems());
 
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Сохранить отчёт");
+        fileChooser.getExtensionFilters().addAll(
+                new ExtensionFilter("PDF", "*.pdf"),
+                new ExtensionFilter("Все файлы", "*.*"));
+
+        File selectedFile = fileChooser.showSaveDialog(rootPane.getScene().getWindow());
+        if (selectedFile != null) {
+            FinancialAnalytics analysisData = analyticsCreator.createAnalytics(reportData);
+            reportCreator.createReport(analysisData, selectedFile.getAbsolutePath());
+        }
+    }
+
+    private List<Visitation> applyDateFilters(List<Visitation> reportData) {
+        Stream<Visitation> reportDataStream = reportData.stream()
+                .filter(visitation -> visitation.getDateTime().isBefore(LocalDateTime.now()));
+
+        if (startDatePicker.getValue() != null) {
+            reportDataStream = reportDataStream
+                    .filter(visitation -> visitation
+                            .getDateTime()
+                            .toLocalDate()
+                            .isAfter(startDatePicker.getValue()));
+        }
+
+        if (endDatePicker.getValue() != null) {
+            reportDataStream = reportDataStream
+                    .filter(visitation -> visitation
+                            .getDateTime()
+                            .toLocalDate()
+                            .isBefore(endDatePicker.getValue()));
+        }
+
+        return reportDataStream.toList();
     }
 }
