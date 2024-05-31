@@ -21,6 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import org.controlsfx.control.Notifications;
+import org.controlsfx.control.action.Action;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -125,6 +126,10 @@ public class FinancialController {
         if (selectedFile != null) {
             FinancialAnalytics analysisData = analyticsCreator.createAnalytics(reportData);
             reportCreator.createReport(analysisData, selectedFile.getAbsolutePath());
+
+            Notifications.create()
+                    .text("Отчёт успешно сохранён в " + selectedFile.getParent())
+                    .showConfirm();
         }
     }
 
