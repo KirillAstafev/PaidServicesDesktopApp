@@ -1,9 +1,6 @@
 package com.paidservices.paidservicesdesktopapp.record.controller;
 
-import com.paidservices.paidservicesdesktopapp.model.Diagnosis;
-import com.paidservices.paidservicesdesktopapp.model.MedicalRecord;
-import com.paidservices.paidservicesdesktopapp.model.Person;
-import com.paidservices.paidservicesdesktopapp.model.Staff;
+import com.paidservices.paidservicesdesktopapp.model.*;
 import com.paidservices.paidservicesdesktopapp.record.view.cellfactory.DiagnosisComboBoxCellFactory;
 import com.paidservices.paidservicesdesktopapp.record.view.converter.DiagnosisConverter;
 import com.paidservices.paidservicesdesktopapp.visitation.view.cellfactory.StaffComboBoxCellFactory;
@@ -18,7 +15,7 @@ import org.controlsfx.control.Notifications;
 
 import java.util.function.Consumer;
 
-public class AddRecordController {
+public class EditRecordController {
     private final WebClient client = WebClient.getInstance();
     private Consumer<MedicalRecord> controllerCallback;
 
@@ -29,40 +26,41 @@ public class AddRecordController {
     public TextField patientMiddleNameTextField;
     public TextField patientSnilsTextField;
     public TextField patientPhoneNumberTextField;
-    public ComboBox<Staff> staffComboBox;
     public ComboBox<Diagnosis> diagnosisComboBox;
     public DatePicker datePicker;
     public TextArea noteTextArea;
     public Button saveRecordButton;
 
+    private MedicalRecord selectedRecord;
     private Person selectedPatient;
 
     public void setControllerCallback(Consumer<MedicalRecord> controllerCallback) {
         this.controllerCallback = controllerCallback;
     }
 
+    public void setSelectedRecord(MedicalRecord record) {
+        this.selectedRecord = record;
+
+        diagnosisComboBox.setValue(selectedRecord.getDiagnosis());
+        datePicker.setValue(selectedRecord.getDate());
+        noteTextArea.setText(selectedRecord.getNote());
+
+        setSelectedPatient(record.getPatient());
+    }
+
+    private void setSelectedPatient(Person patient) {
+        this.selectedPatient = patient;
+
+        patientLastNameTextField.setText(patient.getLastName());
+        patientFirstNameTextField.setText(patient.getFirstName());
+        patientMiddleNameTextField.setText(patient.getMiddleName());
+        patientSnilsTextField.setText(patient.getSnils());
+        patientPhoneNumberTextField.setText(patient.getPhoneNumber());
+    }
+
     @FXML
     public void initialize() {
-        initializeStaffComboBox();
         initializeDiagnosisComboBox();
-
-        client.getStaffList()
-                .thenAccept(staffList -> {
-                    Platform.runLater(() -> {
-                        staffComboBox.setItems(FXCollections.observableArrayList(staffList));
-                    });
-                })
-                .exceptionally(throwable -> {
-                    Platform.runLater(() -> {
-                        Notifications
-                                .create()
-                                .title("Ошибка!")
-                                .text("Не удалось загрузить данные о мед.персонале!")
-                                .showError();
-                    });
-
-                    throw new RuntimeException(throwable);
-                });
 
         client.getDiagnoses()
                 .thenAccept(diagnoses -> {
@@ -87,7 +85,7 @@ public class AddRecordController {
         client.getPersonBySnils(patientSearchTextField.getText())
                 .thenAccept(person -> {
                     Platform.runLater(() -> {
-                        showPatientInfo(person);
+                        setSelectedPatient(person);
                     });
                 })
                 .exceptionally(throwable -> {
@@ -104,20 +102,17 @@ public class AddRecordController {
     }
 
     public void saveRecordAction(ActionEvent actionEvent) {
-        MedicalRecord record = buildMedicalRecord();
+        MedicalRecord editedRecord = buildMedicalRecord();
 
-        client.saveMedicalRecord(record)
-                .thenAccept(id -> {
-                    record.setId(id);
+        client.updateMedicalRecord(editedRecord)
+                .thenAccept(v -> {
+                    controllerCallback.accept(editedRecord);
+
                     Platform.runLater(() -> {
-                        controllerCallback.accept(record);
-
-                        Platform.runLater(() -> {
-                            Notifications
-                                    .create()
-                                    .text("Данные успешно сохранены.")
-                                    .showConfirm();
-                        });
+                        Notifications
+                                .create()
+                                .text("Данные успешно сохранены.")
+                                .showConfirm();
                     });
                 })
                 .exceptionally(throwable -> {
@@ -125,7 +120,7 @@ public class AddRecordController {
                         Notifications
                                 .create()
                                 .title("Ошибка!")
-                                .text("Не удалось сохранить данные о посещении!")
+                                .text("Не удалось обновить мед.запись!")
                                 .showError();
                     });
 
@@ -133,31 +128,17 @@ public class AddRecordController {
                 });
     }
 
-    private void showPatientInfo(Person patient) {
-        selectedPatient = patient;
-
-        patientFirstNameTextField.setText(selectedPatient.getFirstName());
-        patientMiddleNameTextField.setText(selectedPatient.getMiddleName());
-        patientLastNameTextField.setText(selectedPatient.getLastName());
-        patientSnilsTextField.setText(selectedPatient.getSnils());
-        patientPhoneNumberTextField.setText(selectedPatient.getPhoneNumber());
-    }
-
     private MedicalRecord buildMedicalRecord() {
         MedicalRecord record = new MedicalRecord();
 
+        record.setId(selectedRecord.getId());
         record.setPatient(selectedPatient);
-        record.setStaff(staffComboBox.getSelectionModel().getSelectedItem());
         record.setDiagnosis(diagnosisComboBox.getSelectionModel().getSelectedItem());
+        record.setStaff(selectedRecord.getStaff());
         record.setDate(datePicker.getValue());
         record.setNote(noteTextArea.getText());
 
         return record;
-    }
-
-    private void initializeStaffComboBox() {
-        staffComboBox.setCellFactory(new StaffComboBoxCellFactory());
-        staffComboBox.setConverter(new StaffConverter());
     }
 
     private void initializeDiagnosisComboBox() {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.paidservices.paidservicesdesktopapp.record.controller.EditRecordController"
+           prefHeight="800.0" prefWidth="450.0"
+           style="-fx-padding: 5">
+
+    <VBox spacing="10" style="-fx-padding: 10">
+        <HBox spacing="5" style="-fx-padding: 5">
+            <TextField fx:id="patientSearchTextField" style="-fx-font-size: 18"
+                       prefWidth="320" promptText="СНИЛС пациента"/>
+            <Button
+                    fx:id="searchPatientButton"
+                    style="-fx-font-size: 18"
+                    text="Поиск"
+                    onAction="#searchPatientAction"/>
+        </HBox>
+
+        <Label text="Общая информация о пациенте" style="-fx-font-size: 18"/>
+        <VBox spacing="30" style="-fx-padding: 5; -fx-alignment: top-center">
+            <TextField fx:id="patientLastNameTextField" style="-fx-font-size: 18"
+                       prefWidth="320" promptText="Фамилия пациента"/>
+            <TextField fx:id="patientFirstNameTextField" style="-fx-font-size: 18"
+                       prefWidth="320" promptText="Имя пациента"/>
+            <TextField fx:id="patientMiddleNameTextField" style="-fx-font-size: 18"
+                       prefWidth="320" promptText="Отчество пациента (при наличии)"/>
+            <TextField fx:id="patientSnilsTextField" style="-fx-font-size: 18"
+                       prefWidth="320" promptText="СНИЛС пациента"/>
+            <TextField fx:id="patientPhoneNumberTextField" style="-fx-font-size: 18"
+                       prefWidth="320" promptText="Номер телефона пациента"/>
+        </VBox>
+
+        <Label text="Информация о мед.записи" style="-fx-font-size: 18"/>
+
+        <VBox spacing="30" style="-fx-padding: 5; -fx-alignment: top-center">
+            <ComboBox fx:id="diagnosisComboBox" style="-fx-font-size: 18"
+                      prefWidth="400" promptText="Диагноз"/>
+
+            <HBox spacing="5" style="-fx-alignment: top-center">
+                <DatePicker fx:id="datePicker" promptText="Дата создания записи"
+                            prefWidth="400" style="-fx-font-size: 16"/>
+            </HBox>
+
+            <TextArea fx:id="noteTextArea" style="-fx-font-size: 18"
+                      prefWidth="400" prefHeight="200" promptText="Примечание"/>
+
+            <Button fx:id="saveRecordButton" text="Сохранить"
+                    style="-fx-font-size: 18" onAction="#saveRecordAction"/>
+        </VBox>
+    </VBox>
+</StackPane>

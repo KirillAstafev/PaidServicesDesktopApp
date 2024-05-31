@@ -4,8 +4,6 @@ import com.paidservices.paidservicesdesktopapp.PaidServiceApplication;
 import com.paidservices.paidservicesdesktopapp.model.MedicalRecord;
 import com.paidservices.paidservicesdesktopapp.model.Person;
 import com.paidservices.paidservicesdesktopapp.model.Staff;
-import com.paidservices.paidservicesdesktopapp.model.Visitation;
-import com.paidservices.paidservicesdesktopapp.visitation.controller.AddVisitationController;
 import com.paidservices.paidservicesdesktopapp.webclient.client.WebClient;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -125,8 +123,34 @@ public class RecordController {
         stage.show();
     }
 
-    public void editRecordAction(ActionEvent actionEvent) {
+    public void editRecordAction(ActionEvent actionEvent) throws IOException {
+        if (recordTable.getSelectionModel().getSelectedItem() == null) {
+            Notifications
+                    .create()
+                    .text("Выберите данные для редактирования.")
+                    .showWarning();
 
+            return;
+        }
+
+        FXMLLoader fxmlLoader = new FXMLLoader(PaidServiceApplication.class.getResource("record/edit-record-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+
+        EditRecordController controller = fxmlLoader.getController();
+        controller.setSelectedRecord(recordTable.getSelectionModel().getSelectedItem());
+
+        controller.setControllerCallback(record -> {
+            Platform.runLater(() -> {
+                recordTable.getItems().removeIf(r -> r.getId().equals(record.getId()));
+                recordTable.getItems().add(record);
+                stage.close();
+            });
+        });
+
+        stage.setTitle("Редактирование мед.записи");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void deleteRecordAction(ActionEvent actionEvent) {
