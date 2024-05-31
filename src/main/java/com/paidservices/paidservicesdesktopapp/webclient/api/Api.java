@@ -33,4 +33,16 @@ public interface Api {
 
     @GET("records")
     Call<List<MedicalRecord>> getRecordsByPatientId(@Query("patientId") Integer patientId);
+
+    @POST("records")
+    Call<Integer> saveMedicalRecord(@Body MedicalRecord record);
+
+    @PUT("records/{id}")
+    Call<Void> updateMedicalRecord(@Path("id") Integer id, @Body MedicalRecord record);
+
+    @DELETE("records/{id}")
+    Call<Void> deleteMedicalRecord(@Path("id") Integer id);
+
+    @GET("diagnoses")
+    Call<List<Diagnosis>> getDiagnoses();
 }
