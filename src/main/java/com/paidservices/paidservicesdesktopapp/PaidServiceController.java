@@ -55,4 +55,19 @@ public class PaidServiceController {
         modulePane.getTabs().add(recordsTab);
         modulePane.getSelectionModel().select(recordsTab);
     }
+
+    public void servicesModuleOnClick(MouseEvent mouseEvent) throws IOException {
+        if (mouseEvent.getClickCount() < 2)
+            return;
+
+        FXMLLoader fxmlLoader = new FXMLLoader(PaidServiceApplication.class.getResource("service/service-view.fxml"));
+        Node rootNode = fxmlLoader.load();
+
+        Tab recordsTab = new Tab("Модуль мед. услуг");
+        recordsTab.setStyle("-fx-font-size: 18; -fx-padding: 10");
+        recordsTab.setContent(rootNode);
+
+        modulePane.getTabs().add(recordsTab);
+        modulePane.getSelectionModel().select(recordsTab);
+    }
 }

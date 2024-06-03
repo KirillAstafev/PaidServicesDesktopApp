@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.paidservices.paidservicesdesktopapp.service.controller.ServiceController"
+           style="-fx-padding: 5">
+    <VBox spacing="5">
+        <HBox spacing="5">
+            <Button
+                    fx:id="addServiceButton"
+                    style="-fx-font-size: 18"
+                    text="Добавить"
+                    onAction="#addServiceAction"/>
+            <Button
+                    fx:id="editServiceButton"
+                    style="-fx-font-size: 18"
+                    text="Редактировать"
+                    onAction="#editServiceAction"/>
+            <Button
+                    fx:id="deleteServiceButton"
+                    style="-fx-font-size: 18"
+                    text="Удалить"
+                    onAction="#deleteServiceAction"/>
+        </HBox>
+        <TableView fx:id="serviceTable" prefHeight="1000">
+            <placeholder>
+                <Label/>
+            </placeholder>
+            <columns>
+                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                             fx:id="nameColumn" text="Наименование" prefWidth="960"/>
+                <TableColumn style="-fx-font-size: 18; -fx-alignment: center"
+                             fx:id="priceColumn" text="Цена" prefWidth="960"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+</StackPane>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.paidservices.paidservicesdesktopapp.service.controller.EditServiceController"
+           prefHeight="300.0" prefWidth="400.0"
+           style="-fx-padding: 5">
+
+    <VBox spacing="10" style="-fx-padding: 10">
+        <Label text="Общая информация о пациенте" style="-fx-font-size: 18"/>
+        <VBox spacing="30" style="-fx-padding: 5; -fx-alignment: top-center">
+            <TextField fx:id="serviceNameTextField" style="-fx-font-size: 18"
+                       prefWidth="320" promptText="Наименование услуги"/>
+            <TextField fx:id="servicePriceTextField" style="-fx-font-size: 18"
+                       prefWidth="320" promptText="Цена"/>
+            <Button fx:id="saveServiceButton" text="Сохранить"
+                    style="-fx-font-size: 18" onAction="#saveServiceAction"/>
+        </VBox>
+    </VBox>
+</StackPane>

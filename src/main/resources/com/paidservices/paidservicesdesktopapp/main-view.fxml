@@ -41,6 +41,16 @@
                         <Label text="Модуль для работы с мед. картами пациентов" style="-fx-font-size: 14"/>
                     </VBox>
                 </StackPane>
+
+                <StackPane prefHeight="120" prefWidth="450"
+                           GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.columnSpan="1" GridPane.rowSpan="1"
+                           style="-fx-border-width: 1; -fx-border-radius: 10; -fx-border-style: solid; -fx-padding: 10"
+                           onMouseClicked="#servicesModuleOnClick">
+                    <VBox spacing="30">
+                        <Label text="Модуль мед. услуг" style="-fx-font-size: 26"/>
+                        <Label text="Модуль для работы с мед. услугами" style="-fx-font-size: 14"/>
+                    </VBox>
+                </StackPane>
             </GridPane>
         </Tab>
     </TabPane>

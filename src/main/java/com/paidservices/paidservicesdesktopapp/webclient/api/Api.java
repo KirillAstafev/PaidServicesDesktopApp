@@ -25,6 +25,15 @@ public interface Api {
     @GET("services")
     Call<List<MedicalService>> getMedicalServiceList();
 
+    @POST("services")
+    Call<Integer> saveMedicalService(@Body MedicalService service);
+
+    @PUT("services/{id}")
+    Call<Void> updateMedicalService(@Path("id") Integer serviceId, @Body MedicalService service);
+
+    @DELETE("services/{id}")
+    Call<Void> deleteMedicalService(@Path("id") Integer serviceId);
+
     @GET("persons")
     Call<Person> getPersonBySnils(@Query("snils") String snils);
 

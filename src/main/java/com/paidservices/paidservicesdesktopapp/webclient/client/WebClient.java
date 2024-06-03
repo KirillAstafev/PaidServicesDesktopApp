@@ -89,6 +89,33 @@ public class WebClient {
         return result;
     }
 
+    public CompletableFuture<Integer> saveMedicalService(MedicalService service) {
+        CompletableFuture<Integer> result = new CompletableFuture<>();
+
+        apiService.saveMedicalService(service)
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
+
+    public CompletableFuture<Void> updateMedicalService(MedicalService service) {
+        CompletableFuture<Void> result = new CompletableFuture<>();
+
+        apiService.updateMedicalService(service.getId(), service)
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
+
+    public CompletableFuture<Void> deleteMedicalService(Integer id) {
+        CompletableFuture<Void> result = new CompletableFuture<>();
+
+        apiService.deleteMedicalService(id)
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
+
     public CompletableFuture<Person> getPersonBySnils(String snils) {
         CompletableFuture<Person> result = new CompletableFuture<>();
 
