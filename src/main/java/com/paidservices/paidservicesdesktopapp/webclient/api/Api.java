@@ -40,6 +40,9 @@ public interface Api {
     @POST("persons")
     Call<Integer> savePerson(@Body Person person);
 
+    @DELETE("persons/{id}")
+    Call<Void> deletePerson(@Path("id") Integer personId);
+
     @GET("records")
     Call<List<MedicalRecord>> getRecordsByPatientId(@Query("patientId") Integer patientId);
 

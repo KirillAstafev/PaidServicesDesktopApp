@@ -32,11 +32,14 @@ public class RecordController {
     public Button addRecordButton;
     public Button editRecordButton;
     public Button deleteRecordButton;
+    public Button deletePersonButton;
     public TableView<MedicalRecord> recordTable;
     public TableColumn<MedicalRecord, String> patientColumn;
     public TableColumn<MedicalRecord, String> staffColumn;
     public TableColumn<MedicalRecord, String> diagnosisColumn;
     public TableColumn<MedicalRecord, String> dateColumn;
+
+    private Person selectedPatient;
 
     @FXML
     public void initialize() {
@@ -74,6 +77,8 @@ public class RecordController {
     public void searchPatientAction(ActionEvent actionEvent) {
         client.getPersonBySnils(patientSnilsTextField.getText())
                 .thenAccept(person -> {
+                    selectedPatient = person;
+
                     client.getRecordsByPatientId(person.getId())
                             .thenAccept(medicalRecords -> {
                                 Platform.runLater(() -> {
@@ -96,9 +101,8 @@ public class RecordController {
                     Platform.runLater(() -> {
                         Notifications
                                 .create()
-                                .title("Ошибка!")
                                 .text("Не удалось загрузить данные о пациенте!")
-                                .showError();
+                                .showWarning();
                     });
 
                     throw new RuntimeException(throwable);
@@ -181,6 +185,37 @@ public class RecordController {
                                 .create()
                                 .title("Ошибка!")
                                 .text("Не удалось удалить данные!")
+                                .showError();
+                    });
+
+                    throw new RuntimeException(throwable);
+                });
+    }
+
+    public void deletePersonButton(ActionEvent actionEvent) {
+        if (selectedPatient == null) {
+            Platform.runLater(() -> {
+                Notifications
+                        .create()
+                        .text("Пациент для удаления не выбран! Воспользуйтесь поиском!")
+                        .showWarning();
+            });
+
+            return;
+        }
+
+        client.deletePerson(selectedPatient.getId())
+                .thenAccept((v) -> {
+                    Platform.runLater(() -> {
+                        Notifications.create()
+                                .text("Данные пациента успешно удалены.")
+                                .showConfirm();
+                    });
+                })
+                .exceptionally(throwable -> {
+                    Platform.runLater(() -> {
+                        Notifications.create()
+                                .text("Ошибка! Нельзя удалить данные пациента!")
                                 .showError();
                     });
 

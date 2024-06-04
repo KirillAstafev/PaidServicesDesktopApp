@@ -134,6 +134,15 @@ public class WebClient {
         return result;
     }
 
+    public CompletableFuture<Void> deletePerson(Integer personId) {
+        CompletableFuture<Void> result = new CompletableFuture<>();
+
+        apiService.deletePerson(personId)
+                .enqueue(new MainServiceCallback<>(result));
+
+        return result;
+    }
+
     public CompletableFuture<List<MedicalRecord>> getRecordsByPatientId(Integer patientId) {
         CompletableFuture<List<MedicalRecord>> result = new CompletableFuture<>();
 

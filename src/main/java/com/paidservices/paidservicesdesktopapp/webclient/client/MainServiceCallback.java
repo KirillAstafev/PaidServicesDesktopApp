@@ -17,6 +17,11 @@ class MainServiceCallback<T> implements Callback<T> {
     public void onResponse(Call<T> call, Response<T> response) {
         if (response.isSuccessful()) {
             result.complete(response.body());
+            return;
+        }
+
+        if (response.code() == 500) {
+            result.completeExceptionally(new RuntimeException("Неизвестная ошибка сервера"));
         }
     }
 

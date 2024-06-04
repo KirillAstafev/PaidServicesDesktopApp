@@ -35,6 +35,12 @@
                     style="-fx-font-size: 18"
                     text="Удалить мед.запись"
                     onAction="#deleteRecordAction"/>
+            <Button
+                    fx:id="deletePersonButton"
+                    style="-fx-font-size: 18"
+                    text="Удалить пациента"
+                    onAction="#deletePersonButton"
+            />
         </HBox>
         <TableView fx:id="recordTable" prefHeight="1000">
             <placeholder>
