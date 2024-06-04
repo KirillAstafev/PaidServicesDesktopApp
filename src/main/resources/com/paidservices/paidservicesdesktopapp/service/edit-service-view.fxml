@@ -12,7 +12,7 @@
            style="-fx-padding: 5">
 
     <VBox spacing="10" style="-fx-padding: 10">
-        <Label text="Общая информация о пациенте" style="-fx-font-size: 18"/>
+        <Label text="Общая информация о мед.услуге" style="-fx-font-size: 18"/>
         <VBox spacing="30" style="-fx-padding: 5; -fx-alignment: top-center">
             <TextField fx:id="serviceNameTextField" style="-fx-font-size: 18"
                        prefWidth="320" promptText="Наименование услуги"/>
